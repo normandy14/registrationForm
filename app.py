@@ -1,4 +1,10 @@
 from flask import Flask, render_template
+from dotenv import load_dotenv
+import mysql.connector
+
+import os
+
+pass_ = os.environ.get("Password")
 
 app = Flask(__name__)
 
