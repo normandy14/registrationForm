@@ -4,7 +4,7 @@ import mysql.connector
 
 import os
 
-pass_ = os.environ.get("Password")
+pass_ = os.environ.get("PASSWORD")
 
 app = Flask(__name__)
 
