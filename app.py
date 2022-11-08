@@ -20,7 +20,14 @@ def html_form():
         data = request.form
         print (data)
         firstName = request.form['firstName']
-        print (firstName)
+        lastName = request.form['lastName']
+        email = request.form['email']
+        account = request.form['account']
+        
+        sql = "INSERT INTO persons (firstname, lastname, email, account) VALUES ('{}', '{}', '{}', '{}');".format(firstName, lastName, email, account)
+        cur = cnx.cursor()
+        cur.execute(sql)
+        cnx.commit()
     return render_template("app.html")
 
 ''''
