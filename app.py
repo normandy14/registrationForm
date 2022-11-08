@@ -6,6 +6,11 @@ import os
 
 pass_ = os.environ.get("PASSWORD")
 
+cnx = mysql.connector.connect(user='normandy14', password=pass_,
+                              host='127.0.0.1',
+                              database='registration')
+                
+
 app = Flask(__name__)
 
 @app.route("/")
