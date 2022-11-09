@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from dotenv import load_dotenv
+import hashlib
 import mysql.connector
 
 import os
@@ -22,9 +23,12 @@ def html_form():
         firstName = request.form['firstName']
         lastName = request.form['lastName']
         email = request.form['email']
+        password = request.form['password'] + "SuperThresh212" # add salt to form password
         account = request.form['account']
         
-        sql = "INSERT INTO persons (firstname, lastname, email, account) VALUES ('{}', '{}', '{}', '{}');".format(firstName, lastName, email, account)
+        hashedPassword = hashlib.sha256(password.encode()).hexdigest()
+        
+        sql = "INSERT INTO persons (firstname, lastname, email, password, account) VALUES ('{}', '{}', '{}', '{}', '{}');".format(firstName, lastName, email, hashedPassword, account)
         cur = cnx.cursor()
         cur.execute(sql)
         cnx.commit()
