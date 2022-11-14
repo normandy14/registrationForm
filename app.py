@@ -34,23 +34,6 @@ def html_form():
         cnx.commit()
     return render_template("app.html")
 
-''''
-@app.route("/form")
-def form():
-    sql = "SELECT * FROM persons"
-    cur = cnx.cursor()
-    cur.execute(sql)
-    myresult = cur.fetchall()
-    for x in myresult:
-        print(x)
-    
-    
-    sql = "INSERT INTO persons (firstname, lastname, email, account) VALUES ('Bob', 'Blue', 'blue@gmail.com', 'business');"
-    cur = cnx.cursor()
-    cur.execute(sql)
-    cnx.commit()
-    return ""
-'''
 
 if __name__ == "__main__":
    app.run()
