@@ -5,9 +5,10 @@ import mysql.connector
 
 import os
 
+user_ = os.environ.get("USER")
 pass_ = os.environ.get("PASSWORD")
 
-cnx = mysql.connector.connect(user='normandy14', password=pass_,
+cnx = mysql.connector.connect(user=user_, password=pass_,
                               host='127.0.0.1',
                               database='registration')
               
