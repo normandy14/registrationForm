@@ -36,11 +36,10 @@ class Form(FlaskForm):
 
     password = PasswordField('password', validators=[InputRequired(), Length(6, 12), Regexp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])')])
     
-    '''
+    
     account = RadioField('account',
                        choices=['personal', 'business'],
                        validators=[InputRequired()])
-    '''
     '''
     # Mongodb
     age = IntegerField('age', validators=[InputRequired()])
