@@ -5,8 +5,9 @@ import mysql.connector
 from pymongo import MongoClient
 
 from flask_wtf import FlaskForm
-from wtforms import (StringField, TextAreaField, IntegerField, RadioField)
-from wtforms.validators import InputRequired, Length
+from wtforms import (StringField, TextAreaField, PasswordField, IntegerField, RadioField, SelectField, EmailField)
+from wtforms.validators import InputRequired, Length, Email
+
 
 import os
 
@@ -23,12 +24,42 @@ users = db.users
 
 app = Flask(__name__)
 
+HOUR_CHOICES = [('1', '8am'), ('2', '10am')]
+
+
+class Form(FlaskForm):
+    # Mysql
+    firstName = StringField('firstName', validators=[InputRequired()])
+    lastName = StringField('lastName', validators=[InputRequired()])
+    
+    email = EmailField('email', validators=[InputRequired(), Length(4, 128), Email()])
+
+    password = PasswordField('password', [
+        validators.InputRequired() #,validators.EqualTo('confirm', message='Passwords must match')
+    ])
+    
+    account = RadioField('account',
+                       choices=['Beginner', 'Intermediate', 'Advanced'],
+                       validators=[InputRequired()])
+    
+    # Mongodb
+    age = IntegerField('age', validators=[InputRequired()])
+    # referrer = SelectField(choices=[('personal', 'Personal Account'), ('business', ' Business Account')])
+    bio = TextAreaField('bio', 
+                        validators=[InputRequired(),
+                        Length(max=200)])
+
 @app.route("/", methods=['GET', 'POST'])
 def html_form():
     if request.method == 'POST':
-        """modify/update the information for <user_id>"""
         data = request.form
         print (data)
+        form = Form()
+        if form.validate_on_submit():
+            print("success")
+        else:
+            print("not successful")
+        '''
         firstName = request.form['firstName']
         lastName = request.form['lastName']
         email = request.form['email']
@@ -47,6 +78,7 @@ def html_form():
         cur = cnx.cursor()
         cur.execute(sql)
         cnx.commit()
+        '''
     return render_template("app.html")
 
 

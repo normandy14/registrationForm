@@ -9,6 +9,7 @@ mysql-connector-python = "*"
 python-dotenv = "*"
 pymongo = "*"
 flask-wtf = "*"
+wtforms = {extras = ["email"], version = "*"}
 
 [dev-packages]
 
