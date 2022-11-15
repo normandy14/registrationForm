@@ -24,31 +24,22 @@ users = db.users
 
 app = Flask(__name__)
 
-# HOUR_CHOICES = [('1', '8am'), ('2', '10am')]
 app.secret_key = 'GreenZed55'.encode('utf8')
 
 class Form(FlaskForm):
     # Mysql
     firstName = StringField('firstName', validators=[InputRequired()])
     lastName = StringField('lastName', validators=[InputRequired()])
-    
     email = EmailField('email', validators=[InputRequired(), Length(4, 128), Email()])
-
     password = PasswordField('password', validators=[InputRequired(), Length(6, 12), Regexp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])')])
-    
-    
     account = RadioField('account',
                        choices=['personal', 'business'],
                        validators=[InputRequired()])
     
     # Mongodb
     age = IntegerField('age', validators=[NumberRange(min=13, max=120)])
-    
     referrer = SelectField(choices=['', 'freeCodeCamp News', 'freeCodeCamp Youtube Channel', 'freeCodeCamp Forum', 'Other'])
-    
-    bio = TextAreaField('bio', 
-                        validators=[
-                        Length(max=280)])
+    bio = TextAreaField('bio', validators=[Length(max=280)])
     
 @app.route("/", methods=['GET', 'POST'])
 def html_form():
