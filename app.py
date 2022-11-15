@@ -4,6 +4,10 @@ import hashlib
 import mysql.connector
 from pymongo import MongoClient
 
+from flask_wtf import FlaskForm
+from wtforms import (StringField, TextAreaField, IntegerField, RadioField)
+from wtforms.validators import InputRequired, Length
+
 import os
 
 user_ = os.environ.get("USER")
