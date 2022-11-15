@@ -6,7 +6,7 @@ from pymongo import MongoClient
 
 from flask_wtf import FlaskForm
 from wtforms import (StringField, TextAreaField, PasswordField, IntegerField, RadioField, SelectField, EmailField)
-from wtforms.validators import InputRequired, Length, Email
+from wtforms.validators import InputRequired, Length, Email, Regexp
 
 
 import os
@@ -24,8 +24,8 @@ users = db.users
 
 app = Flask(__name__)
 
-HOUR_CHOICES = [('1', '8am'), ('2', '10am')]
-
+# HOUR_CHOICES = [('1', '8am'), ('2', '10am')]
+app.secret_key = 'GreenZed55'.encode('utf8')
 
 class Form(FlaskForm):
     # Mysql
@@ -34,24 +34,31 @@ class Form(FlaskForm):
     
     email = EmailField('email', validators=[InputRequired(), Length(4, 128), Email()])
 
-    password = PasswordField('password', [
-        validators.InputRequired() #,validators.EqualTo('confirm', message='Passwords must match')
-    ])
+    password = PasswordField('password', validators=[InputRequired(), Length(6, 12), Regexp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])')])
     
+    '''
     account = RadioField('account',
-                       choices=['Beginner', 'Intermediate', 'Advanced'],
+                       choices=['personal', 'business'],
                        validators=[InputRequired()])
-    
+    '''
+    '''
     # Mongodb
     age = IntegerField('age', validators=[InputRequired()])
     # referrer = SelectField(choices=[('personal', 'Personal Account'), ('business', ' Business Account')])
     bio = TextAreaField('bio', 
                         validators=[InputRequired(),
                         Length(max=200)])
-
+    '''
 @app.route("/", methods=['GET', 'POST'])
 def html_form():
+    form = Form()
+    if form.validate_on_submit():
+        print("success")
+    else:
+        print("not successful")
+    '''
     if request.method == 'POST':
+  
         data = request.form
         print (data)
         form = Form()
@@ -59,7 +66,7 @@ def html_form():
             print("success")
         else:
             print("not successful")
-        '''
+            
         firstName = request.form['firstName']
         lastName = request.form['lastName']
         email = request.form['email']
@@ -79,7 +86,7 @@ def html_form():
         cur.execute(sql)
         cnx.commit()
         '''
-    return render_template("app.html")
+    return render_template("app.html", form=form)
 
 
 if __name__ == "__main__":
