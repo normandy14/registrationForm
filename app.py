@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from dotenv import load_dotenv
 import hashlib
 import mysql.connector
+from pymongo import MongoClient
 
 import os
 
@@ -12,6 +13,9 @@ cnx = mysql.connector.connect(user=user_, password=pass_,
                               host='127.0.0.1',
                               database='registration')
               
+client = MongoClient("localhost", 27017)
+db = client.flask_db
+users = db.users
 
 app = Flask(__name__)
 
@@ -26,6 +30,12 @@ def html_form():
         email = request.form['email']
         password = request.form['password'] + "SuperThresh212" # add salt to form password
         account = request.form['account']
+        
+        age = request.form['age']
+        referrer = request.form['referrer']
+        bio = request.form['bio']
+        
+        users.insert_one({ '_id': email, 'age': age, 'referrer': referrer, 'bio': bio})
         
         hashedPassword = hashlib.sha256(password.encode()).hexdigest()
         
