@@ -32,9 +32,7 @@ class Form(FlaskForm):
     lastName = StringField('lastName', validators=[InputRequired()])
     email = EmailField('email', validators=[InputRequired(), Length(4, 128), Email()])
     password = PasswordField('password', validators=[InputRequired(), Length(6, 12), Regexp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])')])
-    account = RadioField('account',
-                       choices=['personal', 'business'],
-                       validators=[InputRequired()])
+    account = RadioField('account', choices=['personal', 'business'], validators=[InputRequired()])
     
     # Mongodb
     age = IntegerField('age', validators=[NumberRange(min=13, max=120)])
@@ -48,36 +46,36 @@ def html_form():
         print("success")
     else:
         print("not successful")
-    '''
-    if request.method == 'POST':
   
+    if request.method == 'POST':
+            
         data = request.form
         print (data)
+        
         form = Form()
         if form.validate_on_submit():
             print("success")
+            firstName = request.form['firstName']
+            lastName = request.form['lastName']
+            email = request.form['email']
+            password = request.form['password'] + "SuperThresh212" # add salt to form password
+            account = request.form['account']
+        
+            age = request.form['age']
+            referrer = request.form['referrer']
+            bio = request.form['bio']
+        
+            users.insert_one({ '_id': email, 'age': age, 'referrer': referrer, 'bio': bio})
+        
+            hashedPassword = hashlib.sha256(password.encode()).hexdigest()
+        
+            sql = "INSERT INTO persons (firstname, lastname, email, password, account) VALUES ('{}', '{}', '{}', '{}', '{}');".format(firstName, lastName, email, hashedPassword, account)
+            cur = cnx.cursor()
+            cur.execute(sql)
+            cnx.commit()
         else:
             print("not successful")
             
-        firstName = request.form['firstName']
-        lastName = request.form['lastName']
-        email = request.form['email']
-        password = request.form['password'] + "SuperThresh212" # add salt to form password
-        account = request.form['account']
-        
-        age = request.form['age']
-        referrer = request.form['referrer']
-        bio = request.form['bio']
-        
-        users.insert_one({ '_id': email, 'age': age, 'referrer': referrer, 'bio': bio})
-        
-        hashedPassword = hashlib.sha256(password.encode()).hexdigest()
-        
-        sql = "INSERT INTO persons (firstname, lastname, email, password, account) VALUES ('{}', '{}', '{}', '{}', '{}');".format(firstName, lastName, email, hashedPassword, account)
-        cur = cnx.cursor()
-        cur.execute(sql)
-        cnx.commit()
-        '''
     return render_template("app.html", form=form)
 
 
