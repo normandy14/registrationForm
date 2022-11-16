@@ -8,7 +8,6 @@ from flask_wtf import FlaskForm
 from wtforms import (StringField, TextAreaField, PasswordField, IntegerField, RadioField, SelectField, EmailField)
 from wtforms.validators import InputRequired, Length, Email, Regexp, NumberRange
 
-
 import os
 
 user_ = os.environ.get("USER")
@@ -22,9 +21,11 @@ client = MongoClient("localhost", 27017)
 db = client.flask_db
 users = db.users
 
+secretKey = os.environ.get("SECRETKEY")
+
 app = Flask(__name__)
 
-app.secret_key = 'GreenZed55'.encode('utf8')
+app.secret_key = secretKey.encode('utf8')
 
 class Form(FlaskForm):
     # Mysql
