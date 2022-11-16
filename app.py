@@ -65,14 +65,22 @@ def html_form():
             referrer = request.form['referrer']
             bio = request.form['bio']
         
-            users.insert_one({ '_id': email, 'age': age, 'referrer': referrer, 'bio': bio})
-        
             hashedPassword = hashlib.sha256(password.encode()).hexdigest()
-        
-            sql = "INSERT INTO persons (firstname, lastname, email, password, account) VALUES ('{}', '{}', '{}', '{}', '{}');".format(firstName, lastName, email, hashedPassword, account)
-            cur = cnx.cursor()
-            cur.execute(sql)
-            cnx.commit()
+            
+            try:
+                sql = "INSERT INTO persons (firstname, lastname, email, password, account) VALUES ('{}', '{}', '{}', '{}', '{}');".format(firstName, lastName, email, hashedPassword, account)
+                cur = cnx.cursor()
+                cur.execute(sql)
+                cnx.commit()
+            except mysql.connector.IntegrityError:
+                print ("email already registered in MySQL database")
+                
+            '''
+            try:
+                users.insert_one({ '_id': email, 'age': age, 'referrer': referrer, 'bio': bio})
+            except DuplicateKeyError:
+                print ("email already registered in MongoDB")
+            '''
         else:
             print("not successful")
             
