@@ -67,6 +67,7 @@ def html_form():
         
             hashedPassword = hashlib.sha256(password.encode()).hexdigest()
             
+            ''''
             try:
                 sql = "INSERT INTO persons (firstname, lastname, email, password, account) VALUES ('{}', '{}', '{}', '{}', '{}');".format(firstName, lastName, email, hashedPassword, account)
                 cur = cnx.cursor()
@@ -76,11 +77,12 @@ def html_form():
                 print ("email already registered in MySQL database")
                 
             '''
-            try:
+            if users.count_documents({ '_id': email }, limit = 1):
+                print ("email already exists in MongoDB")
+            else:
                 users.insert_one({ '_id': email, 'age': age, 'referrer': referrer, 'bio': bio})
-            except DuplicateKeyError:
-                print ("email already registered in MongoDB")
-            '''
+            
+
         else:
             print("not successful")
             
