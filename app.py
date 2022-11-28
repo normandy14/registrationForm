@@ -56,9 +56,9 @@ def html_form():
         form = Form()
         if form.validate_on_submit():
             print("success")
-            firstName = request.form['firstName']
-            lastName = request.form['lastName']
-            email = request.form['email']
+            firstName = (request.form['firstName']).lower()
+            lastName = (request.form['lastName']).lower()
+            email = (request.form['email']).lower()
             password = request.form['password'] + "SuperThresh212" # add salt to form password
             account = request.form['account']
         
