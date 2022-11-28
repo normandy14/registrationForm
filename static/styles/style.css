@@ -7,6 +7,10 @@ body {
 	font-family: Tahoma;
 	font-size: 16px;
 }
+.flashes {
+	margin: 1em auto;
+	text-align: center;
+}
 
 h1, p {
 	margin: 1em auto;

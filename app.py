@@ -78,20 +78,24 @@ def html_form():
                 cur.close()
             except mysql.connector.IntegrityError:
                 print ("email already registered in MySQL database")
-                error = "Email already registered"
+                error = "Email already registered!"
                 
             if users.count_documents({ '_id': email }, limit = 1):
                 print ("email already exists in MongoDB")
-                error = "Email already registered"
+                error = "Email already registered!"
             else:
                 users.insert_one({ '_id': email, 'age': age, 'referrer': referrer, 'bio': bio})
             
             if error != "":
                 flash(error)
                 return render_template("app.html", form=form)
+            else:
+                message = "Form sumission was successful!"
+                flash(message)
+                return render_template("app.html", form=form)
 
         else:
-            error = "Form submission was unsuccessful"
+            error = "Form submission was unsuccessful!"
             flash(error)
             
     return render_template("app.html", form=form)
