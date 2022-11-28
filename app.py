@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash
 from dotenv import load_dotenv
 import hashlib
 import mysql.connector
@@ -6,7 +6,7 @@ from pymongo import MongoClient
 
 from flask_wtf import FlaskForm
 from wtforms import (StringField, TextAreaField, PasswordField, IntegerField, RadioField, SelectField, EmailField)
-from wtforms.validators import InputRequired, Length, Email, Regexp, NumberRange
+from wtforms.validators import InputRequired, Length, Email, Regexp, NumberRange, Optional
 
 import os
 
@@ -36,9 +36,9 @@ class Form(FlaskForm):
     account = RadioField('account', choices=['personal', 'business'], validators=[InputRequired()])
     
     # Mongodb
-    age = IntegerField('age', validators=[NumberRange(min=13, max=120)])
-    referrer = SelectField(choices=['', 'freeCodeCamp News', 'freeCodeCamp Youtube Channel', 'freeCodeCamp Forum', 'Other'])
-    bio = TextAreaField('bio', validators=[Length(max=280)])
+    age = IntegerField('age', validators=[NumberRange(min=13, max=120), Optional()])
+    referrer = SelectField(choices=['', 'freeCodeCamp News', 'freeCodeCamp Youtube Channel', 'freeCodeCamp Forum', 'Other'], validators=[Optional()])
+    bio = TextAreaField('bio', validators=[Length(max=280), Optional()])
     
 @app.route("/", methods=['GET', 'POST'])
 def html_form():
@@ -68,22 +68,31 @@ def html_form():
         
             hashedPassword = hashlib.sha256(password.encode()).hexdigest()
             
+            error = ""
+            
             try:
                 sql = "INSERT INTO persons (firstname, lastname, email, password, account) VALUES ('{}', '{}', '{}', '{}', '{}');".format(firstName, lastName, email, hashedPassword, account)
                 cur = cnx.cursor()
                 cur.execute(sql)
                 cnx.commit()
+                cur.close()
             except mysql.connector.IntegrityError:
                 print ("email already registered in MySQL database")
+                error = "Email already registered"
                 
             if users.count_documents({ '_id': email }, limit = 1):
                 print ("email already exists in MongoDB")
+                error = "Email already registered"
             else:
                 users.insert_one({ '_id': email, 'age': age, 'referrer': referrer, 'bio': bio})
             
+            if error != "":
+                flash(error)
+                return render_template("app.html", form=form)
 
         else:
-            print("not successful")
+            error = "Form submission was unsuccessful"
+            flash(error)
             
     return render_template("app.html", form=form)
 
