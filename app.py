@@ -54,14 +54,16 @@ class Form(FlaskForm):
     age = IntegerField('age', validators=[NumberRange(min=13, max=120), Optional()])
     referrer = SelectField(choices=['', 'freeCodeCamp News', 'freeCodeCamp Youtube Channel', 'freeCodeCamp Forum', 'Other'], validators=[Optional()])
     bio = TextAreaField('bio', validators=[Length(max=280), Optional()])
-    
+
+# prints allow for backend debugging
+# same '/', but with POST request sends form infomration to beckend, while GET displays the form
 @app.route("/", methods=['GET', 'POST'])
 def html_form():
     form = Form()
     if form.validate_on_submit():
-        print("success")
+        print("alerts us that flask_wtf will succeed")
     else:
-        print("not successful")
+        print("alerts us the flask_wtf will not succeed")
   
     if request.method == 'POST':
             
