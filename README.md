@@ -1,6 +1,7 @@
 # Registration Form
 
 An implementation of a registration form
+![snapshot](static/img/profile.PNG)
 
 ## Description
 
