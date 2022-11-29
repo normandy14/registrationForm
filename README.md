@@ -1,11 +1,18 @@
 # Registration Form
 
-An implementation of a registration form
+An implementation of a registration form from [FreeCodeCamp](https://www.freecodecamp.org/learn/2022/responsive-web-design/learn-html-forms-by-building-a-registration-form/step-1)
+
+A snapshot of the program: 
+
 ![snapshot](static/img/profile.PNG)
 
 ## Description
 
-Implentation of form built with the following technologies
+This project is used to practice front-end and back-end development. Gathering information from the user in the form from a user is essential for almost every web application. Storing the information in a database is essential.
+
+For practicing of both SQL and NoSQL databases, this project uses a local MySQL database and local Mongodb NoSQL database to store information. The design choice is justified because the MySQL stores data essential to the user login information (first name, last name, email, password, etc.), while the Mongodb NoSQL database stores information optional to the user (age, referral, bio, etc.).
+
+Implentation of form built with the following technologies:
 
 * :snake: Python/Flask/Pipenv
 * :writing_hand: Git
@@ -13,25 +20,31 @@ Implentation of form built with the following technologies
 * :cloud: MySQL
 * :cloud: Mongodb
 
+This project also used the following Python modules:
+
+* [dotenv](https://pypi.org/project/python-dotenv/)
+* [hashlib](https://pypi.org/project/hashlib/)
+* [mysql.connector](https://pypi.org/project/mysql-connector-python/)
+* [pymongo](https://pypi.org/project/pymongo/)
+* [flask-wtf](https://pypi.org/project/Flask-WTF/)
+
 This project uses .env to record secrets: MySQL username, password, secretkey to not commit this important information to github
-This project uses 3rd party Python modules such as the following: dotenv, hashlib, mysql.connector, ppymongo, flask_wtf
 
-Why does this project have 2 databases?
-MySQL is best for information strongly associated with user account, such as name, email, and password
-Mongodb is best for storing preferences and optional information from the user, so that the web app can offer a customized version of the app when he or she logs on
+See the following pattern:
 
-The fields collected from the user are of the following:
+```
+import os 
+ 
+# obtain sensitive information using os module in .env file from pipenv shell
+user_ = os.environ.get("USER") 
+pass_ = os.environ.get("PASSWORD")
 
-* First Name
-* Last Name
-* Email
-* Password
-* Account Type (Personal  or Business)
-* Age
-* Referral
-* Bio
+# use user_ and pass_ in code
+```
 
+The .env file it listed in .gitignore and should never be uploaded to github or committed locally in git because it contains sensitive data
 
+This project uses [pipenv](https://pipenv.pypa.io/en/latest/) globally to install Python modules, load .env file, and start the flask server
 
 ## Getting Started
 
