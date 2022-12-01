@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, flash
-from dotenv import load_dotenv # for loading secret values in .env file
+from dotenv import load_dotenv # for loading secret values in .env file from pipenv
 import hashlib # this is for hashing passwords
 import mysql.connector # this is for connection to a MySQL databse
 from pymongo import MongoClient # this is for connection to a Mongodb NoSQL database
@@ -37,7 +37,7 @@ users = db.users
 # a secret key is required to generate a 'form.csrf_token'
 # assume secret key is secret, so store in .env file and recover value below
 
-secretKey = os.environ.get("
+secretKey = os.environ.get("SECRETKEY")
 
 app = Flask(__name__)
 
