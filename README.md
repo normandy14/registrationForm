@@ -126,6 +126,16 @@ pipenv app.py
 
 Follow pipenv section instructions above
 
+## Explanation of Code
+
+### Front-end Validation
+
+* Front end validation used with a combination of pattern and/or required in HTML
+
+### Back-end Validation
+
+* Back end validation used using flask-wtf library
+
 ## License
 
 This project is licensed under the GNU General Public License v3.0 [License](License.md) - see the LICENSE.md file for details
