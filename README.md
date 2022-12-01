@@ -119,7 +119,7 @@ To run code in an isolated pipenv enviroment, execute the following command
 **(This starts the enviroment using Flask development server)**:
 
 ```
-pipenv app.py
+pipenv run app.py
 ```
 
 ### Executing program
