@@ -32,50 +32,6 @@ This project also used the following Python modules:
 * [pymongo](https://pypi.org/project/pymongo/)
 * [flask-wtf](https://pypi.org/project/Flask-WTF/)
 
-### Utilizing and Using an Enviroment (.env) file
-
-This project uses .env to record secrets: MySQL username, password, secretkey to not commit this important information to github
-
-See the following pattern:
-
-```
-import os 
- 
-# obtain sensitive information using os module in .env file from pipenv shell
-user_ = os.environ.get("USER") 
-pass_ = os.environ.get("PASSWORD")
-
-# use user_ and pass_ in code
-```
-
-The .env file it listed in .gitignore and should never be uploaded to github or committed locally in git because it contains sensitive data
-
-This project uses [pipenv](https://pipenv.pypa.io/en/latest/) globally to install Python modules, load .env file, and start the flask server
-
-### Installing and Using Pipenv
-
-To install pipenv, see [here](https://pipenv.pypa.io/en/latest/install/)
-
-Once installed, cd to the directory(assuming directory name is registrationFormMySQL)
-
-```
-cd registrationFormMySQL
-```
-
-Then run the following command to install 3rd party dependencies in pipenv:
-
-```
-pipenv install
-```
-
-To run code in an isolated pipenv enviroment, execute the following command
-**(This starts the enviroment using Flask development server)**:
-
-```
-pipenv app.py
-```
-
-
 ### Installing and Using MySQL Database
 
 To install [MySQL](https://www.mysql.com/) database, use the community edition download:
@@ -119,23 +75,56 @@ After installing MySQL Community Edition, launch MySQL shell:
   ```
 
 ### Installing and Using Mongodb Database
+* Install locally using [local instructors](https://www.mongodb.com/docs/manual/administration/install-community/)
+* Open MongoDB Compass
+* Create Database and Collection (we name database flask_db and we name collection users)
 
-## Getting Started
+### Utilizing and Using an Enviroment (.env) file
 
-### Dependencies
+This project uses .env to record secrets: MySQL username, password, secretkey to not commit this important information to github
 
-* Requires Java Development Kit, JDK
+See the following pattern:
 
-### Installing
+```
+import os 
+ 
+# obtain sensitive information using os module in .env file from pipenv shell
+user_ = os.environ.get("USER") 
+pass_ = os.environ.get("PASSWORD")
 
-* To install the ava Development JDK, [JDK](https://docs.oracle.com/en/java/javase/17/install/overview-jdk-installation.html#GUID-8677A77F-231A-40F7-98B9-1FD0B48C346A)
+# use user_ and pass_ in code
+```
+
+The .env file it listed in .gitignore and should never be uploaded to github or committed locally in git because it contains sensitive data
+
+This project uses [pipenv](https://pipenv.pypa.io/en/latest/) globally to install Python modules, load .env file, and start the flask server
+
+### Installing and Using Pipenv
+
+To install pipenv, see [here](https://pipenv.pypa.io/en/latest/install/)
+
+Once installed, cd to the directory(assuming directory name is registrationFormMySQL)
+
+```
+cd registrationFormMySQL
+```
+
+Then run the following command to install 3rd party dependencies in pipenv:
+
+```
+pipenv install
+```
+
+To run code in an isolated pipenv enviroment, execute the following command
+**(This starts the enviroment using Flask development server)**:
+
+```
+pipenv app.py
+```
 
 ### Executing program
 
-The easiest method is the following:
-* Install Eclipse, or equivalent Java IDE
-* Import folders in this repo as new Java Projects
-* Select a project and run in Java IDE
+Follow pipenv section instructions above
 
 ## License
 
