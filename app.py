@@ -118,7 +118,7 @@ def html_form():
             else:
                 message = "Form sumission was successful!"
                 flash(message)
-                return render_template("app.html", form=form)
+                
 
         else:
             # validation with flask_wtf failed
