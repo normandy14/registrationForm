@@ -17,7 +17,7 @@ For practicing of both SQL and NoSQL databases, this project uses a local MySQL 
 Implentation of form built with the following technologies:
 
 * :snake: Python/Flask/Pipenv
-* :writing_hand: Git
+* :floppy_disk: Git
 * :writing_hand: HTML5/CSS3
 * :cloud: MySQL
 * :cloud: Mongodb
