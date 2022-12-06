@@ -6,7 +6,8 @@
   <meta name="author" content="GA">
   <meta name="description" content="a registration form">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  
+  <!-- Generate a URL to the given endpoint with the given values  -->
   <link href="{{ url_for('static',filename='styles/style.css') }}" rel="stylesheet" >
 </head>
 
@@ -15,7 +16,9 @@
   <h1>Registration Form</h1>
   <p>Please fill out this form with the required information</p>
 	
-	
+	<!-- Flask leverages Jinja2 as its template engine.
+	     see https://flask.palletsprojects.com/en/2.2.x/templating
+    -->
 	{% with messages = get_flashed_messages() %}
 		{% if messages %}
 			<p>
@@ -27,8 +30,14 @@
 			</p>
 		{% endif %}
 	{% endwith %}
-
+	
+  <!-- REPLACE "action=" with name/location of server running.
+	   for flask development default server, http://127.0.0.1:5000
+  -->
   <form action="http://127.0.0.1:5000" method="POST">
+    <!-- Any view using FlaskForm to process the request is already getting CSRF protection.
+		 CSRF protection requires a secret key to securely sign the token. By default this will use the Flask app’s SECRET_KEY. 
+    -->
 	{{ form.csrf_token }}
 	<fieldset>
 		<label for="first-name">Enter Your First Name: <input type="text" name="firstName" id="first-name" required/></label>
